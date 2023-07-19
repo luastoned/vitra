@@ -1,6 +1,5 @@
 # Vitra
 
-
 ## What's inside?
 
 - [ReactJS](https://react.dev/)
@@ -17,4 +16,27 @@
 
   ```bash
   npx degit luastoned/vitra app-name
+  ```
+
+2. Access the project directory.
+
+  ```bash
+  cd app-name
+  ```
+
+3. Initialize a git repository.
+
+  ```bash
+  git init
+  ```
+
+4. Install dependencies.
+
+  ```bash
+  yarn
+  ```
+
+5. Serve with hot reload at http://localhost:5173.
+  ```bash
+  yarn dev
   ```
