@@ -1,4 +1,4 @@
-import { RootRoute, Route, Router } from '@tanstack/router';
+import { RootRoute, Route, Router } from '@tanstack/react-router';
 
 import { Home } from '~/components/Home';
 
@@ -12,7 +12,7 @@ const routeTree = rootRoute.addChildren([indexRoute, blogRoute.addChildren([post
 
 export const router = new Router({ routeTree });
 
-declare module '@tanstack/router' {
+declare module '@tanstack/react-router' {
   interface Register {
     // This infers the type of our router and registers it across your entire project
     router: typeof router;

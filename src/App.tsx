@@ -1,6 +1,6 @@
 import { CSSReset, ChakraProvider, ColorModeScript, ThemeConfig, theme as baseTheme, extendTheme } from '@chakra-ui/react';
 import { theme as proTheme } from '@chakra-ui/pro-theme';
-import { RouterProvider } from '@tanstack/router';
+import { RouterProvider } from '@tanstack/react-router';
 
 import { router } from '~/Router';
 
