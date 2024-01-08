@@ -18,23 +18,23 @@
     "@chakra-ui/pro-theme": "^0.10.0",
     "@chakra-ui/react": "^2.8.2",
     "@chakra-ui/system": "^2.6.2",
-    "@emotion/react": "^11.11.1",
+    "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
     "@fontsource/quicksand": "^5.0.16",
     "@fontsource/roboto": "^5.0.8",
     "@fontsource/source-sans-pro": "^5.0.8",
-    "@tanstack/react-query": "^5.14.1",
-    "@tanstack/react-router": "^0.0.1-beta.282",
-    "framer-motion": "^10.16.16",
+    "@tanstack/react-query": "^5.17.9",
+    "@tanstack/react-router": "^1.1.10",
+    "framer-motion": "^10.17.9",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.12.0"
   },
   "devDependencies": {
-    "@types/react": "^18.2.45",
+    "@types/react": "^18.2.47",
     "@types/react-dom": "^18.2.18",
-    "@typescript-eslint/eslint-plugin": "^6.15.0",
-    "@typescript-eslint/parser": "^6.15.0",
+    "@typescript-eslint/eslint-plugin": "^6.18.0",
+    "@typescript-eslint/parser": "^6.18.0",
     "@vitejs/plugin-react": "^4.2.1",
     "eslint": "^8.56.0",
     "eslint-plugin-react-hooks": "^4.6.0",
@@ -42,7 +42,7 @@
     "lightningcss": "^1.22.1",
     "typescript": "^5.3.3",
     "unplugin-fonts": "^1.1.1",
-    "vite": "^5.0.10",
-    "vite-tsconfig-paths": "^4.2.2"
+    "vite": "^5.0.11",
+    "vite-tsconfig-paths": "^4.2.3"
   }
 }
