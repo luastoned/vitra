@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import tsconfigPaths from 'vite-tsconfig-paths';
-import Unfonts from 'unplugin-fonts/vite';
+import unfonts from 'unplugin-fonts/vite';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -10,13 +10,37 @@ export default defineConfig({
   },
   css: {
     transformer: 'postcss', // lightningcss
-    lightningcss: {
-      drafts: {
-        nesting: true,
-      },
-    },
   },
-  plugins: [react(), tsconfigPaths(), Unfonts({ fontsource: { families: ['Quicksand', 'Roboto', 'Source Sans Pro'] } })],
+  plugins: [
+    react(),
+    tsconfigPaths(),
+    unfonts({
+      fontsource: {
+        families: [
+          {
+            name: 'Open Sans',
+            subset: 'latin',
+            variable: { wght: true, ital: true }, // wdth: false, slnt: false, opsz: false
+          },
+          {
+            name: 'Quicksand',
+            subset: 'latin',
+            variable: { wght: true },
+          },
+          {
+            name: 'Roboto Flex',
+            subset: 'latin',
+            variable: { wght: true, opsz: true },
+          },
+          {
+            name: 'Roboto Mono',
+            subset: 'latin',
+            variable: { wght: true, ital: true },
+          },
+        ],
+      },
+    }),
+  ],
   server: {
     host: '0.0.0.0',
     port: 47000,
