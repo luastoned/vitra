@@ -1,31 +1,17 @@
-import { CSSReset, ChakraProvider, ColorModeScript, type ThemeConfig, theme as baseTheme, extendTheme } from '@chakra-ui/react';
-import { theme as proTheme } from '@chakra-ui/pro-theme';
+import { ChakraProvider } from '@chakra-ui/react';
 import { RouterProvider } from '@tanstack/react-router';
 
-import { router } from '~/Router';
+import { ColorModeProvider } from '~/components/ui/color-mode';
 
-import '~/styles/app.css';
+import { router } from '~/globals/Router';
+import { system } from '~/globals/Theme';
+
+import '~/styles/app.scss';
 
 export const App = () => {
-  const config: ThemeConfig = {
-    initialColorMode: 'system',
-    useSystemColorMode: true,
-  };
-
-  const theme = extendTheme(proTheme, {
-    config,
-    colors: { ...baseTheme.colors, brand: baseTheme.colors.blue },
-    fonts: {
-      heading: "'Quicksand', sans-serif",
-      body: "'Roboto Flex', sans-serif",
-    },
-  });
-
   return (
-    <ChakraProvider theme={theme}>
-      <CSSReset />
-
-      <ColorModeScript />
+    <ChakraProvider value={system}>
+      <ColorModeProvider />
 
       <RouterProvider router={router} />
       {/* <TanStackRouterDevtools router={router} /> */}

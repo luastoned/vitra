@@ -43,10 +43,10 @@ export default defineConfig({
   ],
   server: {
     host: '0.0.0.0',
-    port: 47000,
+    port: 50000,
     proxy: {
       '/api': {
-        target: 'https://localhost:47010',
+        target: 'https://localhost:50010',
         changeOrigin: true,
         secure: false,
         ws: true,
@@ -55,10 +55,10 @@ export default defineConfig({
   },
   preview: {
     host: '0.0.0.0',
-    port: 47000,
+    port: 50000,
     proxy: {
       '/api': {
-        target: 'https://localhost:47010',
+        target: 'https://localhost:50010',
         changeOrigin: true,
         secure: false,
         ws: true,
