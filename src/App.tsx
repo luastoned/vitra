@@ -6,7 +6,7 @@ import { ColorModeProvider } from '~/components/ui/color-mode';
 import { router } from '~/globals/Router';
 import { system } from '~/globals/Theme';
 
-import '~/styles/app.scss';
+import '~/styles/app.css';
 
 export const App = () => {
   return (

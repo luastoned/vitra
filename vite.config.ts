@@ -43,7 +43,7 @@ export default defineConfig({
   ],
   server: {
     host: '0.0.0.0',
-    port: 50000,
+    port: 50020,
     proxy: {
       '/api': {
         target: 'https://localhost:50010',
@@ -55,7 +55,7 @@ export default defineConfig({
   },
   preview: {
     host: '0.0.0.0',
-    port: 50000,
+    port: 50030,
     proxy: {
       '/api': {
         target: 'https://localhost:50010',
