@@ -1,20 +1,15 @@
-import { ChakraProvider } from '@chakra-ui/react';
 import { RouterProvider } from '@tanstack/react-router';
 
-import { ColorModeProvider } from '~/components/ui/color-mode';
-
-import { router } from '~/globals/Router';
-import { system } from '~/globals/Theme';
+import { AppProviders } from '~/app/providers/AppProviders';
+import { router } from '~/app/router/router';
 
 import '~/styles/app.css';
 
 export const App = () => {
   return (
-    <ChakraProvider value={system}>
-      <ColorModeProvider />
-
+    <AppProviders>
       <RouterProvider router={router} />
       {/* <TanStackRouterDevtools router={router} /> */}
-    </ChakraProvider>
+    </AppProviders>
   );
 };

@@ -6,8 +6,8 @@ module.exports = {
       name: 'vitra',
       script: 'npm',
       args: 'run dev',
-      out_file: '/dev/null',
-      error_file: '/dev/null',
+      // out_file: '/dev/null',
+      // error_file: '/dev/null',
     },
   ],
 };

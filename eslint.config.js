@@ -2,17 +2,18 @@ import js from '@eslint/js'
 import globals from 'globals'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
-import tsEsLint from 'typescript-eslint'
-import { globalIgnores } from 'eslint/config'
+import tseslint from 'typescript-eslint'
+import { defineConfig, globalIgnores } from 'eslint/config'
 
-export default tsEsLint.config(
+export default defineConfig([
   globalIgnores(['dist']),
   {
     files: ['**/*.{ts,tsx}'],
     extends: [
       js.configs.recommended,
-      tsEsLint.configs.recommended,
-      reactHooks.configs['recommended-latest'],
+      tseslint.configs.recommended,
+      // tseslint.configs.recommendedTypeChecked,
+      reactHooks.configs.flat.recommended,
       reactRefresh.configs.vite,
     ],
     languageOptions: {
@@ -20,4 +21,4 @@ export default tsEsLint.config(
       globals: globals.browser,
     },
   },
-);
+])

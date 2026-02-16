@@ -5,8 +5,13 @@ import { App } from '~/App';
 
 import 'unfonts.css';
 
-const container = document.getElementById('app') ?? document.getElementById('root');
-const root = createRoot(container as HTMLElement);
+const container = document.getElementById('app');
+
+if (!container) {
+  throw new Error("Root container '#app' not found");
+}
+
+const root = createRoot(container);
 
 root.render(
   <StrictMode>

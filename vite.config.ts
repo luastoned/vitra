@@ -3,14 +3,8 @@ import react from '@vitejs/plugin-react';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import unfonts from 'unplugin-fonts/vite';
 
-// https://vitejs.dev/config/
+// https://vite.dev/config/
 export default defineConfig({
-  build: {
-    cssMinify: 'lightningcss',
-  },
-  css: {
-    transformer: 'postcss', // lightningcss
-  },
   plugins: [
     react(),
     tsconfigPaths(),
@@ -42,11 +36,11 @@ export default defineConfig({
     }),
   ],
   server: {
-    host: '0.0.0.0',
-    port: 50020,
+    // host: '0.0.0.0',
+    port: 5173,
     proxy: {
       '/api': {
-        target: 'https://localhost:50010',
+        target: 'https://localhost:5170',
         changeOrigin: true,
         secure: false,
         ws: true,
@@ -54,11 +48,11 @@ export default defineConfig({
     },
   },
   preview: {
-    host: '0.0.0.0',
-    port: 50030,
+    // host: '0.0.0.0',
+    port: 5174,
     proxy: {
       '/api': {
-        target: 'https://localhost:50010',
+        target: 'https://localhost:5170',
         changeOrigin: true,
         secure: false,
         ws: true,

@@ -1,14 +1,14 @@
 import { createRootRoute, createRoute, createRouter, Outlet } from '@tanstack/react-router';
 
-import { Home } from '~/components/Home';
+import { HomePage } from '~/pages/HomePage';
 
 const rootRoute = createRootRoute({
-  component: () => <Outlet />,
+  component: Outlet,
 });
 
-const idxRoute = createRoute({ getParentRoute: () => rootRoute, path: '/', component: Home });
-const blogRoute = createRoute({ getParentRoute: () => rootRoute, path: 'blog', component: Home });
-const postRoute = createRoute({ getParentRoute: () => rootRoute, path: '$slug', component: Home });
+const idxRoute = createRoute({ getParentRoute: () => rootRoute, path: '/', component: HomePage });
+const blogRoute = createRoute({ getParentRoute: () => rootRoute, path: 'blog', component: HomePage });
+const postRoute = createRoute({ getParentRoute: () => rootRoute, path: '$slug', component: HomePage });
 
 const routeTree = rootRoute.addChildren([idxRoute, blogRoute.addChildren([postRoute])]);
 
