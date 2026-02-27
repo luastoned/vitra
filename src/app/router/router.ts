@@ -1,19 +1,23 @@
-import { createRootRoute, createRoute, createRouter, Outlet } from '@tanstack/react-router';
+import { createRouter } from '@tanstack/react-router';
 
-import { HomePage } from '~/pages/HomePage';
+import { getAuthUser, type AuthUser } from '~/app/auth/auth-session';
+import type { RouterContext } from '~/app/router/route-context';
+import { routeTree } from '~/app/router/route-tree';
 
-const rootRoute = createRootRoute({
-  component: Outlet,
+const routerContext: RouterContext = {
+  user: getAuthUser(),
+};
+
+export const router = createRouter({
+  routeTree,
+  context: routerContext,
+  defaultPreload: 'intent',
 });
 
-const idxRoute = createRoute({ getParentRoute: () => rootRoute, path: '/', component: HomePage });
-const blogRoute = createRoute({ getParentRoute: () => rootRoute, path: 'blog', component: HomePage });
-const postRoute = createRoute({ getParentRoute: () => rootRoute, path: '$slug', component: HomePage });
-
-const routeTree = rootRoute.addChildren([idxRoute, blogRoute.addChildren([postRoute])]);
-
-// Create a new router instance
-export const router = createRouter({ routeTree });
+export function setRouterUser(user: AuthUser | null): void {
+  routerContext.user = user;
+  void router.invalidate();
+}
 
 // Register the router instance for type safety
 declare module '@tanstack/react-router' {

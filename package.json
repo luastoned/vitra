@@ -12,7 +12,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "snippets": "npx @chakra-ui/cli snippet add --outdir src/components/chakra",
+    "snippets": "npx @chakra-ui/cli snippet add --outdir src/shared/ui/chakra",
     "check": "biome check src",
     "format": "biome format src",
     "typecheck": "tsc --noEmit"

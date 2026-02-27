@@ -30,13 +30,19 @@ This document captures the current project conventions so future changes stay co
 - `yarn check` – Biome check on `src`
 - `yarn format` – Biome format on `src`
 
-## Current Structure (baseline)
+## Current Structure (code-based routing baseline)
 
-- `src/app/*` → app-level setup (providers, router, theme)
-- `src/pages/*` → page components
+- `src/app/auth/*` → auth session, guards, and role permissions
+- `src/app/providers/*` → top-level provider composition
+- `src/app/router/*` → router context, route tree, and router instance
+- `src/app/theme/*` → Chakra theme system
+- `src/layouts/*` → route-area layouts (`PublicLayout`, `AppLayout`, `AdminLayout`)
+- `src/pages/public/*` → public pages
+- `src/pages/app/*` → authenticated app pages
+- `src/pages/admin/*` → admin/moderation pages
 - `src/shared/ui/*` → reusable presentational UI
 - `src/shared/hooks/*` → reusable hooks
-- `src/shared/lib/*` → non-UI infra helpers (query client, toaster config)
+- `src/shared/lib/*` → infra helpers (query client, toaster config)
 - `src/shared/stores/*` → Zustand stores
 - `src/styles/*` → global styles
 
@@ -65,8 +71,18 @@ This document captures the current project conventions so future changes stay co
 ## React/Architecture Notes
 
 - Provider composition lives in `src/app/providers/AppProviders.tsx`
-- Router instance lives in `src/app/router/router.ts`
-- Theme system lives in `src/app/theme/theme.ts`
+- Router is **code-based**:
+  - Route context type: `src/app/router/route-context.ts`
+  - Route tree: `src/app/router/route-tree.ts`
+  - Router instance: `src/app/router/router.ts`
+- Route guards are centralized in `src/app/auth/auth-guards.ts`
+- Role permissions are centralized in `src/app/auth/permissions.ts`
+- Auth session helpers are in `src/app/auth/auth-session.ts`
+- Area layouts are split by concern:
+  - `RootLayout` for app shell
+  - `PublicLayout` for public pages
+  - `AppLayout` for authenticated pages
+  - `AdminLayout` for admin/moderation pages
 - Color mode hook is separated from Chakra components:
   - Hook: `src/shared/hooks/use-color-mode.ts`
   - UI wrapper: `src/shared/ui/chakra/ColorMode.tsx`
