@@ -1,7 +1,7 @@
 import { redirect } from '@tanstack/react-router';
 
-import { hasAnyRole } from '~/app/auth/permissions';
 import type { Role } from '~/app/auth/auth-session';
+import { hasAnyRole } from '~/app/auth/permissions';
 import type { RouterContext } from '~/app/router/route-context';
 
 export function requireAuth(context: RouterContext): void {

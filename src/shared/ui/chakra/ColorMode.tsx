@@ -1,6 +1,6 @@
 import type { IconButtonProps, SpanProps } from '@chakra-ui/react';
 import { ClientOnly, IconButton, Skeleton, Span } from '@chakra-ui/react';
-import { Moon, Sun, type IconProps } from '@phosphor-icons/react';
+import { type IconProps, Moon, Sun } from '@phosphor-icons/react';
 import type { ThemeProviderProps } from 'next-themes';
 import { ThemeProvider } from 'next-themes';
 import * as React from 'react';
@@ -33,29 +33,9 @@ export const ColorModeButton = React.forwardRef<HTMLButtonElement, ColorModeButt
 });
 
 export const LightMode = React.forwardRef<HTMLSpanElement, SpanProps>(function LightMode(props, ref) {
-  return (
-    <Span
-      color="fg"
-      display="contents"
-      className="chakra-theme light"
-      colorPalette="gray"
-      colorScheme="light"
-      ref={ref}
-      {...props}
-    />
-  );
+  return <Span color="fg" display="contents" className="chakra-theme light" colorPalette="gray" colorScheme="light" ref={ref} {...props} />;
 });
 
 export const DarkMode = React.forwardRef<HTMLSpanElement, SpanProps>(function DarkMode(props, ref) {
-  return (
-    <Span
-      color="fg"
-      display="contents"
-      className="chakra-theme dark"
-      colorPalette="gray"
-      colorScheme="dark"
-      ref={ref}
-      {...props}
-    />
-  );
+  return <Span color="fg" display="contents" className="chakra-theme dark" colorPalette="gray" colorScheme="dark" ref={ref} {...props} />;
 });

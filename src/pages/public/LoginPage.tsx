@@ -1,7 +1,7 @@
 import { Badge, Button, Heading, HStack, Stack, Text } from '@chakra-ui/react';
 import { useNavigate } from '@tanstack/react-router';
 
-import { clearAuthUser, setAuthUser, type Role } from '~/app/auth/auth-session';
+import { clearAuthUser, type Role, setAuthUser } from '~/app/auth/auth-session';
 import { setRouterUser } from '~/app/router/router';
 
 const availableRoles: Role[] = ['user', 'moderator', 'admin', 'super-admin'];

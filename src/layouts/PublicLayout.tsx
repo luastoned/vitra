@@ -1,5 +1,5 @@
 import { Box, Container, HStack, Link, Text } from '@chakra-ui/react';
-import { Link as RouterLink, Outlet } from '@tanstack/react-router';
+import { Outlet, Link as RouterLink } from '@tanstack/react-router';
 
 export function PublicLayout() {
   return (

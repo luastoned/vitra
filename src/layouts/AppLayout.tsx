@@ -1,5 +1,5 @@
 import { Box, Button, Container, HStack, Link, Stack, Text } from '@chakra-ui/react';
-import { Link as RouterLink, Outlet, useNavigate, useRouter } from '@tanstack/react-router';
+import { Outlet, Link as RouterLink, useNavigate, useRouter } from '@tanstack/react-router';
 
 import { clearAuthUser } from '~/app/auth/auth-session';
 import { setRouterUser } from '~/app/router/router';
