@@ -1,144 +1,124 @@
-# AGENTS.md
+# Vitra Agent Guidance
 
-This document captures the current project conventions so future changes stay consistent.
+Vitra is a TypeScript + React + Vite starter for a pragmatic routed frontend app. Work like a senior TypeScript engineer in an existing codebase: prefer clarity, runtime correctness, maintainability, and consistency with this repository over personal style.
 
-## Guidance Scope
+## Project Shape
 
-- Use this file as the entrypoint for repository engineering guidance.
-- This is a TypeScript/React/Vite project. For TS, TSX, JavaScript, Node/tooling configs, package files, and frontend build code, follow the TypeScript guidance in this file.
-- Prefer repository-local patterns and commands over generic guidance. If a rule conflicts with local config, the checked-in config wins.
+- Runtime: browser React app, ESM package mode, built with Vite `8` using Rolldown/Oxc.
+- Package manager: Yarn classic, with `yarn.lock` committed.
+- UI stack: React `19.2`, Chakra UI `3`, next-themes, and `@phosphor-icons/react`.
+- Routing: TanStack Router `1`, with code-based routing under `src/app/router`.
+- Data/state: TanStack React Query `5` for server state and Zustand `5` for global UI state.
+- App entrypoint: `src/main.tsx` mounts `src/App.tsx`.
+- Provider composition lives in `src/app/providers/AppProviders.tsx`.
+- Theme setup lives in `src/app/theme`.
+- Auth session, guards, and role permissions live in `src/app/auth`.
+- Route-area layouts live in `src/layouts`: `RootLayout`, `PublicLayout`, `AppLayout`, and `AdminLayout`.
+- Pages are grouped by access area under `src/pages/public`, `src/pages/app`, and `src/pages/admin`.
+- Reusable UI, hooks, infra helpers, and stores live under `src/shared`.
+- Global styles live in `src/styles`.
 
-## Stack
+## Commands
 
-- React `19.2`
-- TypeScript `6.0`
-- Vite `8` (Rolldown/Oxc)
-- Chakra UI `3`
-- TanStack Router `1`
-- TanStack React Query `5`
-- Zustand `5`
-- next-themes (color mode)
-- @phosphor-icons/react (icons)
+- Install: `yarn`
+- Develop with Vite: `yarn dev`
+- Build with typecheck: `yarn build`
+- Run baseline checks: `yarn check:all`
+- Preview built output: `yarn preview`
+- Typecheck: `yarn typecheck`
+- Lint: `yarn lint`
+- Lint with fixes: `yarn lint:fix`
+- ESLint compatibility lint: `yarn lint:eslint`
+- Format check: `yarn format:check`
+- Format write: `yarn format`
+- Add Chakra snippets: `yarn snippets`
 
-## Tooling
+There is no test script currently. Do not invent a test command unless you add one to `package.json`.
 
-- Package manager: Yarn classic (`yarn.lock` v1).
-- **Oxlint** for primary linting (`yarn lint`, `yarn lint:fix`)
-- **Oxfmt** for formatting (`yarn format`, `yarn format:check`)
-- **ESLint** remains available as a secondary compatibility lint (`yarn lint:eslint`)
-- **TypeScript strict mode** (`yarn typecheck`)
-- There is no test script currently. Do not invent a test command unless you add one to `package.json`.
+Run the smallest relevant check for the change. For broader edits, run `yarn check:all` when practical. Before committing, run at least `yarn check:all`; `yarn lint:eslint` and `yarn build` are recommended for tooling, dependency, and routing changes.
 
-## Scripts
+## Tooling Source Of Truth
 
-- `yarn dev` – start dev server
-- `yarn build` – typecheck (project refs) + build
-- `yarn preview` – preview build
-- `yarn lint` – Oxlint
-- `yarn lint:fix` – Oxlint with safe fixes
-- `yarn lint:eslint` – ESLint compatibility lint
-- `yarn typecheck` – `tsc --noEmit`
-- `yarn format` – Oxfmt write mode
-- `yarn format:check` – Oxfmt check mode
+- Let `oxfmt` own mechanical formatting and import ordering.
+- Let `oxlint` own primary lint rules.
+- Keep ESLint available as a secondary compatibility check through `yarn lint:eslint`.
+- Do not hand-enforce formatter-owned details such as quote style, semicolons, trailing commas, line width, or import sorting.
+- Follow the TypeScript project configs for semantics: strict mode, `erasableSyntaxOnly`, `verbatimModuleSyntax`, `moduleResolution: "bundler"`, `moduleDetection: "force"`, `noUncheckedSideEffectImports`, and React JSX transform.
+- Use Vite's native `resolve.tsconfigPaths` support for `~/*` path aliases.
 
-## Engineering Rules
+## Before Changing Code
 
-- Reuse existing modules, route patterns, Chakra wrappers, stores, and helpers before adding new abstractions.
-- Before adding a generic utility, check whether `std-kit` already provides it and prefer that when it fits: https://github.com/luastoned/std-kit
-- Keep modules focused and avoid framework-like abstractions. Extract shared helpers only after the same pattern appears at least three times, unless the local design already establishes the abstraction.
-- Prefer named exports for application code. Use default exports only where the framework/tooling expects them.
-- Prefer explicit return types for exported functions, hooks, route guards, and cross-module APIs. Local non-exported helpers may rely on inference when obvious.
-- Do not introduce `any` or `as any` in application code. Use `unknown` at untrusted boundaries, narrow it, and convert to a typed shape quickly.
-- Use `import type` for type-only imports. Let Oxfmt organize import order and grouping.
+Check, in order:
+
+1. Is there already a local pattern, module, or README section for this area?
+2. Does `std-kit` already provide a suitable utility? Prefer it before adding a new helper: https://github.com/luastoned/std-kit
+3. Can the change be solved simply without adding a new abstraction?
+4. Does the change preserve ESM, Vite 8, React 19, Chakra UI, and browser runtime assumptions?
+
+Keep changes small, predictable, and easy to review.
+
+## TypeScript Rules
+
+- Do not introduce `any` or `as any` in application code.
+- Prefer `unknown` for untrusted values, then narrow safely.
+- Type external boundaries, including API payloads, router context, auth state, persisted state, provider responses, and Vite env access.
+- Prefer explicit return types for exported functions, hooks, route guards, and cross-module APIs.
+- Allow obvious local non-exported helpers to rely on inference.
+- Use `import type` for type-only imports.
 - Use `node:` specifiers for Node.js built-ins in config or Node-side code.
-- Preserve runtime assumptions: ESM (`"type": "module"`), Vite 8 with Rolldown/Oxc, TS bundler module resolution, React 19, and browser-focused app code.
+- Use the existing `~/*` alias for source imports when appropriate.
+- Follow the repository's local import convention; do not add or remove file extensions unless the toolchain requires it.
+- Prefer named exports for application code. Use default exports only where a framework or tool requires them.
+- Prefer literal unions, discriminated unions, and `as const` objects over `enum`.
+- Prefer `satisfies` for typed constants and config objects.
+- Avoid non-null assertions unless there is an immediately preceding runtime guarantee.
+- Use runtime validation at trust boundaries when static types cannot prove the shape.
 
-## Current Structure (code-based routing baseline)
+## React And Architecture Rules
 
-- `src/app/auth/*` → auth session, guards, and role permissions
-- `src/app/providers/*` → top-level provider composition
-- `src/app/router/*` → router context, route tree, and router instance
-- `src/app/theme/*` → Chakra theme system
-- `src/layouts/*` → route-area layouts (`PublicLayout`, `AppLayout`, `AdminLayout`)
-- `src/pages/public/*` → public pages
-- `src/pages/app/*` → authenticated app pages
-- `src/pages/admin/*` → admin/moderation pages
-- `src/shared/ui/*` → reusable presentational UI
-- `src/shared/hooks/*` → reusable hooks
-- `src/shared/lib/*` → infra helpers (query client, toaster config)
-- `src/shared/stores/*` → Zustand stores
-- `src/styles/*` → global styles
+- Keep provider composition in `src/app/providers/AppProviders.tsx`.
+- Keep route context, route tree, and router instance in `src/app/router`.
+- Keep route guards in `src/app/auth/auth-guards.ts` and role permissions in `src/app/auth/permissions.ts`.
+- Keep auth session helpers in `src/app/auth/auth-session.ts`.
+- Keep area shell concerns in layouts, not pages.
+- Keep public, authenticated app, and admin/moderation pages in their existing page folders.
+- Keep reusable presentational UI under `src/shared/ui`.
+- Keep reusable hooks under `src/shared/hooks`.
+- Keep infra helpers such as React Query and toast setup under `src/shared/lib`.
+- Keep global UI state in Zustand stores under `src/shared/stores`.
+- Keep Chakra wrapper components thin. Business decisions and routing policy belong in app/auth/router modules, not generic UI components.
+- Keep color mode split between `src/shared/hooks/use-color-mode.ts` and `src/shared/ui/chakra/ColorMode.tsx`.
+- Keep toaster setup split between `src/shared/lib/toast/toaster.ts` and `src/shared/ui/chakra/Toaster.tsx`.
 
-## Naming Conventions
+## Naming And Imports
 
-- **PascalCase** for React component files
-  - Examples: `HomePage.tsx`, `ColorMode.tsx`, `AppProviders.tsx`
-- **kebab-case** for non-component files
-  - Examples: `router.ts`, `theme.ts`, `use-color-mode.ts`, `query-client.ts`, `app-store.ts`
-- Keep folders lowercase and semantic (`app`, `pages`, `shared`, `styles`)
+- Use PascalCase for React component files, such as `HomePage.tsx`, `ColorMode.tsx`, and `AppProviders.tsx`.
+- Use kebab-case for non-component files, such as `router.ts`, `theme.ts`, `use-color-mode.ts`, `query-client.ts`, and `app-store.ts`.
+- Keep folders lowercase and semantic.
+- Prefer absolute `~/*` imports over deep relative chains.
 
-## Import Conventions
+## Functions And Abstractions
 
-- Use path alias `~/*` for `src/*`
-  - Example: `import { router } from '~/app/router/router';`
-- Prefer absolute alias imports over deep relative chains.
-
-## Code Style
-
-- Oxfmt owns formatting, import organization, quote style, semicolons, trailing commas, and line width. Do not hand-enforce rules that tooling already owns unless the edit is semantically required.
-- Single quotes in TS/TSX
-- Semicolons required
-- Trailing commas enabled
-- 2-space indentation
-- Keep modules focused (avoid mixing unrelated concerns)
-
-## React/Architecture Notes
-
-- Provider composition lives in `src/app/providers/AppProviders.tsx`
-- Router is **code-based**:
-  - Route context type: `src/app/router/route-context.ts`
-  - Route tree: `src/app/router/route-tree.ts`
-  - Router instance: `src/app/router/router.ts`
-- Route guards are centralized in `src/app/auth/auth-guards.ts`
-- Role permissions are centralized in `src/app/auth/permissions.ts`
-- Auth session helpers are in `src/app/auth/auth-session.ts`
-- Area layouts are split by concern:
-  - `RootLayout` for app shell
-  - `PublicLayout` for public pages
-  - `AppLayout` for authenticated pages
-  - `AdminLayout` for admin/moderation pages
-- Color mode hook is separated from Chakra components:
-  - Hook: `src/shared/hooks/use-color-mode.ts`
-  - UI wrapper: `src/shared/ui/chakra/ColorMode.tsx`
-- Toaster setup is split into config + UI:
-  - Config: `src/shared/lib/toast/toaster.ts`
-  - UI: `src/shared/ui/chakra/Toaster.tsx`
-
-## Baseline Data Layer
-
-- React Query client is centralized in:
-  - `src/shared/lib/query/query-client.ts`
-- Global UI state baseline store is in:
-  - `src/shared/stores/app-store.ts`
-
-## Before Committing
-
-Run at least:
-
-1. `yarn lint`
-2. `yarn typecheck`
-
-Optional but recommended:
-
-3. `yarn format:check`
-4. `yarn lint:eslint`
-5. `yarn build`
+- Prefer small, single-purpose functions and plain objects.
+- Use classes only when they provide a clear boundary for cohesive state, dependencies, behavior, or a custom `Error` type.
+- Avoid unnecessary helpers, wrappers, dependencies, and framework-like abstractions.
+- Do not extract shared helpers until a pattern repeats enough to justify it, unless the local design already establishes the abstraction.
+- Prefer early returns over deep nesting.
+- Prefer options objects over positional arguments once a function has 3+ parameters or multiple booleans.
+- Do not silently swallow errors. Preserve causes and useful context when wrapping or logging.
 
 ## Commit Style
 
-Use Conventional Commits with emoji (existing history style), e.g.:
+Follow Conventional Commits with emoji, matching existing history.
+Use this subject format: `<type>[optional scope][optional !]: <gitmoji> <description>`.
 
-- `feat: ✨ add ...`
-- `fix: 🐛 resolve ...`
-- `refactor: ♻️ restructure ...`
-- `chore: 🔧 update ...`
+## Default Decision Rule
+
+When unsure, choose the option that is:
+
+- more consistent with the repository
+- more explicit at boundaries
+- easier to test
+- easier to read in six months
+- less surprising to the next engineer
+- easier for one maintainer to operate and change

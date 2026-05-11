@@ -10,6 +10,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "check:all": "yarn typecheck && yarn lint && yarn format:check",
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",
     "lint:eslint": "eslint .",
