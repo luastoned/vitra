@@ -1,13 +1,11 @@
-import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import tsconfigPaths from 'vite-tsconfig-paths';
 import unfonts from 'unplugin-fonts/vite';
+import { defineConfig } from 'vite';
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
     react(),
-    tsconfigPaths(),
     unfonts({
       fontsource: {
         families: [
@@ -35,6 +33,9 @@ export default defineConfig({
       },
     }),
   ],
+  resolve: {
+    tsconfigPaths: true,
+  },
   server: {
     // host: '0.0.0.0',
     port: 5173,

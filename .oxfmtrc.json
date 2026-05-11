@@ -1,0 +1,22 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "ignorePatterns": ["/build", "/coverage", "/dist", "/node_modules"],
+  "printWidth": 160,
+  "tabWidth": 2,
+  "useTabs": false,
+  "insertFinalNewline": true,
+  "arrowParens": "always",
+  "semi": true,
+  "singleQuote": true,
+  "trailingComma": "all",
+  "sortImports": {
+    "groups": ["builtin", "external", "internal", ["parent", "sibling", "index"], "style", "unknown"],
+    "newlinesBetween": true
+  },
+  "jsdoc": {
+    "commentLineStrategy": "multiline",
+    "lineWrappingStyle": "balance",
+    "preferCodeFences": true
+  },
+  "sortPackageJson": false
+}
