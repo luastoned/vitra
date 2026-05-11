@@ -1,12 +1,18 @@
-# AGENT.md
+# AGENTS.md
 
 This document captures the current project conventions so future changes stay consistent.
+
+## Guidance Scope
+
+- Use this file as the entrypoint for repository engineering guidance.
+- This is a TypeScript/React/Vite project. For TS, TSX, JavaScript, Node/tooling configs, package files, and frontend build code, follow the TypeScript guidance in this file.
+- Prefer repository-local patterns and commands over generic guidance. If a rule conflicts with local config, the checked-in config wins.
 
 ## Stack
 
 - React `19.2`
-- TypeScript `5.9`
-- Vite `7` (via `rolldown-vite`)
+- TypeScript `6.0`
+- Vite `8` (Rolldown/Oxc)
 - Chakra UI `3`
 - TanStack Router `1`
 - TanStack React Query `5`
@@ -16,19 +22,36 @@ This document captures the current project conventions so future changes stay co
 
 ## Tooling
 
-- **ESLint** for linting (`yarn lint`)
-- **Biome** for formatting + optional checks (`yarn format`, `yarn check`)
+- Package manager: Yarn classic (`yarn.lock` v1).
+- **Oxlint** for primary linting (`yarn lint`, `yarn lint:fix`)
+- **Oxfmt** for formatting (`yarn format`, `yarn format:check`)
+- **ESLint** remains available as a secondary compatibility lint (`yarn lint:eslint`)
 - **TypeScript strict mode** (`yarn typecheck`)
+- There is no test script currently. Do not invent a test command unless you add one to `package.json`.
 
 ## Scripts
 
 - `yarn dev` – start dev server
 - `yarn build` – typecheck (project refs) + build
 - `yarn preview` – preview build
-- `yarn lint` – ESLint
+- `yarn lint` – Oxlint
+- `yarn lint:fix` – Oxlint with safe fixes
+- `yarn lint:eslint` – ESLint compatibility lint
 - `yarn typecheck` – `tsc --noEmit`
-- `yarn check` – Biome check on `src`
-- `yarn format` – Biome format on `src`
+- `yarn format` – Oxfmt write mode
+- `yarn format:check` – Oxfmt check mode
+
+## Engineering Rules
+
+- Reuse existing modules, route patterns, Chakra wrappers, stores, and helpers before adding new abstractions.
+- Before adding a generic utility, check whether `std-kit` already provides it and prefer that when it fits: https://github.com/luastoned/std-kit
+- Keep modules focused and avoid framework-like abstractions. Extract shared helpers only after the same pattern appears at least three times, unless the local design already establishes the abstraction.
+- Prefer named exports for application code. Use default exports only where the framework/tooling expects them.
+- Prefer explicit return types for exported functions, hooks, route guards, and cross-module APIs. Local non-exported helpers may rely on inference when obvious.
+- Do not introduce `any` or `as any` in application code. Use `unknown` at untrusted boundaries, narrow it, and convert to a typed shape quickly.
+- Use `import type` for type-only imports. Let Oxfmt organize import order and grouping.
+- Use `node:` specifiers for Node.js built-ins in config or Node-side code.
+- Preserve runtime assumptions: ESM (`"type": "module"`), Vite 8 with Rolldown/Oxc, TS bundler module resolution, React 19, and browser-focused app code.
 
 ## Current Structure (code-based routing baseline)
 
@@ -62,6 +85,7 @@ This document captures the current project conventions so future changes stay co
 
 ## Code Style
 
+- Oxfmt owns formatting, import organization, quote style, semicolons, trailing commas, and line width. Do not hand-enforce rules that tooling already owns unless the edit is semantically required.
 - Single quotes in TS/TSX
 - Semicolons required
 - Trailing commas enabled
@@ -106,8 +130,9 @@ Run at least:
 
 Optional but recommended:
 
-3. `yarn check`
-4. `yarn build`
+3. `yarn format:check`
+4. `yarn lint:eslint`
+5. `yarn build`
 
 ## Commit Style
 
