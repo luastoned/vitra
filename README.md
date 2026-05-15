@@ -25,7 +25,7 @@
   <a href="#-features">Features</a> •
   <a href="#-stack">Stack</a> •
   <a href="#-quick-start">Quick Start</a> •
-  <a href="#-commands">Commands</a> •
+  <a href="#-scripts">Scripts</a> •
   <a href="#-project-shape">Project Shape</a> •
   <a href="#-license">License</a>
 </p>
@@ -40,6 +40,7 @@
 - 🔐 **Auth baseline** — Session helpers, role permissions, and centralized route guards for public, app, and admin areas.
 - 📦 **Data layer ready** — React Query client and Zustand store baseline wired through app providers.
 - 🧰 **Modern checks** — Oxlint, Oxfmt, TypeScript strict mode, and ESLint compatibility linting.
+- 🌱 **Starter-friendly** — Clone-free setup with `degit`, leaving the first real product free to define its own history.
 
 ## 🧱 Stack
 
@@ -55,9 +56,12 @@
 
 ## 🚀 Quick Start
 
+Create a new project from the starter:
+
 ```bash
-git clone https://github.com/luastoned/vitra.git
-cd vitra
+npx degit luastoned/vitra app-name
+cd app-name
+git init
 yarn
 yarn dev
 ```
@@ -68,7 +72,7 @@ The dev server starts with Vite. By default, the app uses:
 - preview port `5174`
 - `/api` proxy target `https://localhost:5170`
 
-## 📜 Commands
+## 🧰 Scripts
 
 | Command             | Purpose                                          |
 | ------------------- | ------------------------------------------------ |
