@@ -1,73 +1,130 @@
-# React + TypeScript + Vite
+<h1 align="center">
+  <br>
+  ⚡ Vitra
+  <br>
+</h1>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<h4 align="center">Pragmatic React + TypeScript starter powered by Vite, Chakra UI, TanStack Router, and Oxc tooling</h4>
 
-Currently, two official plugins are available:
+<p align="center">
+  <a href="./LICENSE" target="_blank">
+    <img src="https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square" alt="License">
+  </a>
+  <a href="https://vite.dev" target="_blank">
+    <img src="https://img.shields.io/badge/Vite-8-646CFF.svg?style=flat-square" alt="Vite 8">
+  </a>
+  <a href="https://react.dev" target="_blank">
+    <img src="https://img.shields.io/badge/React-19-61DAFB.svg?style=flat-square" alt="React 19">
+  </a>
+  <a href="https://github.com/oxc-project/oxc" target="_blank">
+    <img src="https://img.shields.io/badge/Oxc-ready-blueviolet.svg?style=flat-square" alt="Oxc ready">
+  </a>
+</p>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs/) in Vite 8 for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+<p align="center">
+  <a href="#-features">Features</a> •
+  <a href="#-stack">Stack</a> •
+  <a href="#-quick-start">Quick Start</a> •
+  <a href="#-commands">Commands</a> •
+  <a href="#-project-shape">Project Shape</a> •
+  <a href="#-license">License</a>
+</p>
 
-## React Compiler
+<br>
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## ✨ Features
 
-## Expanding the ESLint configuration
+- ⚡ **Vite 8 + Rolldown** — Fast dev server and production builds with Vite's modern Oxc/Rolldown pipeline.
+- 🧭 **Code-based routing** — TanStack Router setup with explicit route context, route tree, and route guards.
+- 🎨 **Chakra UI foundation** — Chakra UI `3`, next-themes color mode, toaster setup, and reusable UI wrappers.
+- 🔐 **Auth baseline** — Session helpers, role permissions, and centralized route guards for public, app, and admin areas.
+- 📦 **Data layer ready** — React Query client and Zustand store baseline wired through app providers.
+- 🧰 **Modern checks** — Oxlint, Oxfmt, TypeScript strict mode, and ESLint compatibility linting.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🧱 Stack
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+| Area    | Tooling                                  |
+| ------- | ---------------------------------------- |
+| UI      | React `19`, Chakra UI `3`, next-themes   |
+| Routing | TanStack Router `1`                      |
+| Data    | TanStack React Query `5`, Zustand `5`    |
+| Build   | Vite `8`, Rolldown/Oxc, TypeScript `6`   |
+| Quality | Oxlint, Oxfmt, ESLint compatibility lint |
+| Icons   | `@phosphor-icons/react`                  |
+| Fonts   | Fontsource variable font packages        |
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## 🚀 Quick Start
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
+```bash
+git clone https://github.com/luastoned/vitra.git
+cd vitra
+yarn
+yarn dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+The dev server starts with Vite. By default, the app uses:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x';
-import reactDom from 'eslint-plugin-react-dom';
+- dev port `5173`
+- preview port `5174`
+- `/api` proxy target `https://localhost:5170`
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
+## 📜 Commands
+
+| Command             | Purpose                                          |
+| ------------------- | ------------------------------------------------ |
+| `yarn dev`          | Start the Vite dev server.                       |
+| `yarn build`        | Typecheck project references and build.          |
+| `yarn preview`      | Preview the production build locally.            |
+| `yarn check:all`    | Run typecheck, Oxlint, and Oxfmt check.          |
+| `yarn typecheck`    | Run `tsc --noEmit`.                              |
+| `yarn lint`         | Run Oxlint.                                      |
+| `yarn lint:fix`     | Run Oxlint with fixes.                           |
+| `yarn lint:eslint`  | Run ESLint compatibility linting.                |
+| `yarn format`       | Format with Oxfmt.                               |
+| `yarn format:check` | Check formatting with Oxfmt.                     |
+| `yarn snippets`     | Add Chakra snippets into `src/shared/ui/chakra`. |
+
+## 📁 Project Shape
+
+```text
+src/
+  app/
+    auth/       auth session, route guards, and role permissions
+    providers/  top-level provider composition
+    router/     route context, route tree, and router instance
+    theme/      Chakra theme system
+  layouts/      root, public, app, and admin shells
+  pages/
+    public/     public routes
+    app/        authenticated app routes
+    admin/      admin and moderation routes
+  shared/
+    hooks/      reusable hooks
+    lib/        query client, toaster config, infra helpers
+    stores/     Zustand stores
+    ui/         reusable presentational UI
+  styles/       global styles
 ```
+
+## 🧭 Routing & Auth
+
+Routes are defined in code under `src/app/router`. Route guards live in `src/app/auth/auth-guards.ts`, while role permissions are centralized in `src/app/auth/permissions.ts`.
+
+The layout split keeps route-area concerns explicit:
+
+- `PublicLayout` for marketing/auth pages.
+- `AppLayout` for authenticated user pages.
+- `AdminLayout` for admin and moderation pages.
+- `RootLayout` for app-level shell composition.
+
+## 🧰 Tooling Notes
+
+- Oxfmt owns mechanical formatting and import ordering.
+- Oxlint is the primary linter.
+- ESLint remains available through `yarn lint:eslint` for compatibility with React hook and Vite refresh rules.
+- TypeScript uses strict mode with bundler module resolution.
+- Vite resolves the `~/*` alias natively through `resolve.tsconfigPaths`.
+
+## 📄 License
+
+[MIT](./LICENSE) License © 2024-PRESENT [LuaStoned](https://github.com/luastoned)
