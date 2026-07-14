@@ -10,7 +10,3 @@ const roleRank: Record<Role, number> = {
 export function canAccessRole(currentRole: Role, minimumRole: Role): boolean {
   return roleRank[currentRole] >= roleRank[minimumRole];
 }
-
-export function hasAnyRole(currentRole: Role, allowedRoles: Role[]): boolean {
-  return allowedRoles.includes(currentRole);
-}

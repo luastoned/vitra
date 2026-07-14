@@ -7,6 +7,10 @@ export const system = createSystem(defaultConfig, {
         heading: { value: "'Quicksand Variable', sans-serif" },
         body: { value: "'Roboto Flex Variable', sans-serif" },
         mono: { value: "'Roboto Mono Variable', monospace" },
+        openSans: { value: "'Open Sans Variable', sans-serif" },
+        quicksand: { value: "'Quicksand Variable', sans-serif" },
+        robotoFlex: { value: "'Roboto Flex Variable', sans-serif" },
+        robotoMono: { value: "'Roboto Mono Variable', monospace" },
       },
       colors: {
         cyberpunk: {

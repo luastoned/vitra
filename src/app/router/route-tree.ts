@@ -1,25 +1,29 @@
-import { createRootRouteWithContext, createRoute } from '@tanstack/react-router';
+import { createRootRouteWithContext, createRoute, lazyRouteComponent } from '@tanstack/react-router';
 
-import { requireAuth, requireRoles } from '~/app/auth/auth-guards';
+import { requireAuth, requireMinimumRole } from '~/app/auth/auth-guards';
 import type { RouterContext } from '~/app/router/route-context';
-import { AdminLayout } from '~/layouts/AdminLayout';
-import { AppLayout } from '~/layouts/AppLayout';
-import { PublicLayout } from '~/layouts/PublicLayout';
-import { RootLayout } from '~/layouts/RootLayout';
-import { AdminHomePage } from '~/pages/admin/AdminHomePage';
-import { AuditLogPage } from '~/pages/admin/AuditLogPage';
-import { ReportsPage } from '~/pages/admin/ReportsPage';
-import { RolesPage } from '~/pages/admin/RolesPage';
-import { UsersPage } from '~/pages/admin/UsersPage';
-import { DashboardPage } from '~/pages/app/DashboardPage';
-import { ProfilePage } from '~/pages/app/ProfilePage';
-import { SettingsPage } from '~/pages/app/SettingsPage';
-import { AboutPage } from '~/pages/public/AboutPage';
-import { HomePage } from '~/pages/public/HomePage';
-import { LoginPage } from '~/pages/public/LoginPage';
-import { NotFoundPage } from '~/pages/public/NotFoundPage';
-import { PricingPage } from '~/pages/public/PricingPage';
-import { RegisterPage } from '~/pages/public/RegisterPage';
+
+const RootLayout = lazyRouteComponent(() => import('~/layouts/RootLayout'), 'RootLayout');
+const PublicLayout = lazyRouteComponent(() => import('~/layouts/PublicLayout'), 'PublicLayout');
+const AppLayout = lazyRouteComponent(() => import('~/layouts/AppLayout'), 'AppLayout');
+const AdminLayout = lazyRouteComponent(() => import('~/layouts/AdminLayout'), 'AdminLayout');
+
+const HomePage = lazyRouteComponent(() => import('~/pages/public/HomePage'), 'HomePage');
+const AboutPage = lazyRouteComponent(() => import('~/pages/public/AboutPage'), 'AboutPage');
+const PricingPage = lazyRouteComponent(() => import('~/pages/public/PricingPage'), 'PricingPage');
+const LoginPage = lazyRouteComponent(() => import('~/pages/public/LoginPage'), 'LoginPage');
+const RegisterPage = lazyRouteComponent(() => import('~/pages/public/RegisterPage'), 'RegisterPage');
+const NotFoundPage = lazyRouteComponent(() => import('~/pages/public/NotFoundPage'), 'NotFoundPage');
+
+const DashboardPage = lazyRouteComponent(() => import('~/pages/app/DashboardPage'), 'DashboardPage');
+const ProfilePage = lazyRouteComponent(() => import('~/pages/app/ProfilePage'), 'ProfilePage');
+const SettingsPage = lazyRouteComponent(() => import('~/pages/app/SettingsPage'), 'SettingsPage');
+
+const AdminHomePage = lazyRouteComponent(() => import('~/pages/admin/AdminHomePage'), 'AdminHomePage');
+const UsersPage = lazyRouteComponent(() => import('~/pages/admin/UsersPage'), 'UsersPage');
+const ReportsPage = lazyRouteComponent(() => import('~/pages/admin/ReportsPage'), 'ReportsPage');
+const RolesPage = lazyRouteComponent(() => import('~/pages/admin/RolesPage'), 'RolesPage');
+const AuditLogPage = lazyRouteComponent(() => import('~/pages/admin/AuditLogPage'), 'AuditLogPage');
 
 const rootRoute = createRootRouteWithContext<RouterContext>()({
   component: RootLayout,
@@ -90,7 +94,7 @@ const settingsRoute = createRoute({
 const adminLayoutRoute = createRoute({
   getParentRoute: () => rootRoute,
   id: 'admin-layout',
-  beforeLoad: ({ context }) => requireRoles(context, ['moderator', 'admin', 'super-admin']),
+  beforeLoad: ({ context }) => requireMinimumRole(context, 'moderator'),
   component: AdminLayout,
 });
 
@@ -115,7 +119,7 @@ const adminReportsRoute = createRoute({
 const adminRolesRoute = createRoute({
   getParentRoute: () => adminLayoutRoute,
   path: 'admin/roles',
-  beforeLoad: ({ context }) => requireRoles(context, ['admin', 'super-admin']),
+  beforeLoad: ({ context }) => requireMinimumRole(context, 'admin'),
   component: RolesPage,
 });
 

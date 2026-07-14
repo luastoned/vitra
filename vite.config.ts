@@ -11,22 +11,26 @@ export default defineConfig({
         families: [
           {
             name: 'Open Sans',
-            subset: 'latin',
-            variable: { wght: true, ital: true }, // wdth: false, slnt: false, opsz: false
+            variable: { wght: true },
+          },
+          {
+            name: 'Open Sans',
+            variable: { wght: true, ital: true },
           },
           {
             name: 'Quicksand',
-            subset: 'latin',
             variable: { wght: true },
           },
           {
             name: 'Roboto Flex',
-            subset: 'latin',
             variable: { wght: true, opsz: true },
           },
           {
             name: 'Roboto Mono',
-            subset: 'latin',
+            variable: { wght: true },
+          },
+          {
+            name: 'Roboto Mono',
             variable: { wght: true, ital: true },
           },
         ],

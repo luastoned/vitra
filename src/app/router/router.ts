@@ -1,11 +1,11 @@
 import { createRouter } from '@tanstack/react-router';
 
-import { type AuthUser, getAuthUser } from '~/app/auth/auth-session';
+import { getAuthUser, subscribeAuthUser } from '~/app/auth/auth-session';
 import type { RouterContext } from '~/app/router/route-context';
 import { routeTree } from '~/app/router/route-tree';
 
 const routerContext: RouterContext = {
-  user: getAuthUser(),
+  getAuthUser,
 };
 
 export const router = createRouter({
@@ -14,10 +14,9 @@ export const router = createRouter({
   defaultPreload: 'intent',
 });
 
-export function setRouterUser(user: AuthUser | null): void {
-  routerContext.user = user;
+subscribeAuthUser(() => {
   void router.invalidate();
-}
+});
 
 // Register the router instance for type safety
 declare module '@tanstack/react-router' {

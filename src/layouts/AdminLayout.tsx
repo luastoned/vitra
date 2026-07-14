@@ -1,17 +1,15 @@
 import { Box, Button, Container, HStack, Link, Stack, Text } from '@chakra-ui/react';
-import { Outlet, Link as RouterLink, useNavigate, useRouter } from '@tanstack/react-router';
+import { Outlet, Link as RouterLink, useNavigate } from '@tanstack/react-router';
 
-import { clearAuthUser } from '~/app/auth/auth-session';
-import { setRouterUser } from '~/app/router/router';
+import { signOut, useAuthUser } from '~/app/auth/auth-session';
+import { canAccessRole } from '~/app/auth/permissions';
 
 export function AdminLayout() {
   const navigate = useNavigate();
-  const router = useRouter();
-  const user = router.options.context.user;
+  const user = useAuthUser();
 
   const onSignOut = () => {
-    clearAuthUser();
-    setRouterUser(null);
+    signOut();
     void navigate({ to: '/' });
   };
 
@@ -42,7 +40,7 @@ export function AdminLayout() {
           <Link asChild>
             <RouterLink to="/admin/reports">Reports</RouterLink>
           </Link>
-          {(user?.role === 'admin' || user?.role === 'super-admin') && (
+          {user && canAccessRole(user.role, 'admin') && (
             <Link asChild>
               <RouterLink to="/admin/roles">Roles</RouterLink>
             </Link>

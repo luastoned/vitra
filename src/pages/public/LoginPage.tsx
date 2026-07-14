@@ -1,10 +1,7 @@
 import { Badge, Button, Heading, HStack, Stack, Text } from '@chakra-ui/react';
 import { useNavigate } from '@tanstack/react-router';
 
-import { clearAuthUser, type Role, setAuthUser } from '~/app/auth/auth-session';
-import { setRouterUser } from '~/app/router/router';
-
-const availableRoles: Role[] = ['user', 'moderator', 'admin', 'super-admin'];
+import { AUTH_ROLES, type Role, signIn, signOut } from '~/app/auth/auth-session';
 
 export function LoginPage() {
   const navigate = useNavigate();
@@ -16,16 +13,14 @@ export function LoginPage() {
       role,
     };
 
-    setAuthUser(user);
-    setRouterUser(user);
+    signIn(user);
 
     const target = role === 'user' ? '/dashboard' : '/admin';
     void navigate({ to: target });
   };
 
-  const signOut = () => {
-    clearAuthUser();
-    setRouterUser(null);
+  const clearSession = () => {
+    signOut();
     void navigate({ to: '/' });
   };
 
@@ -36,7 +31,7 @@ export function LoginPage() {
       </Heading>
       <Text color="fg.muted">Pick a role to simulate authentication and permission checks.</Text>
       <HStack gap="2" wrap="wrap">
-        {availableRoles.map((role) => (
+        {AUTH_ROLES.map((role) => (
           <Button key={role} variant="outline" onClick={() => loginAs(role)}>
             Login as {role}
           </Button>
@@ -44,7 +39,7 @@ export function LoginPage() {
       </HStack>
       <HStack gap="2" align="center">
         <Badge colorPalette="purple">Dev helper</Badge>
-        <Button size="sm" variant="ghost" onClick={signOut}>
+        <Button size="sm" variant="ghost" onClick={clearSession}>
           Clear session
         </Button>
       </HStack>
