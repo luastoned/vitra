@@ -2,6 +2,14 @@
 
 Vitra is a TypeScript + React + Vite starter for a pragmatic routed frontend app. Work like a senior TypeScript engineer in an existing codebase: prefer clarity, runtime correctness, maintainability, and consistency with this repository over personal style.
 
+## Scope And Completion
+
+- This repository owns one frontend project; root commands and configs apply throughout. Check for nearer instructions when working in newly added areas.
+- Preserve unrelated work. Stage or commit only when authorized, and review changed paths before staging.
+- Carry the requested change through relevant verification and fixes. A local change does not by itself authorize a commit, deployment, or release; carry forward authorization already given in the conversation.
+- Ask only when a missing decision cannot be discovered or reasonably inferred and would materially affect scope or behavior. Continue independent work while that decision is pending.
+- Report changed behavior, checks actually run, and remaining limitations. Update the README when a change affects its documented setup, commands, or architecture.
+
 ## Project Shape
 
 - Runtime: browser React app, ESM package mode, built with Vite `8` using Rolldown/Oxc.
@@ -17,6 +25,7 @@ Vitra is a TypeScript + React + Vite starter for a pragmatic routed frontend app
 - Pages are grouped by access area under `src/pages/public`, `src/pages/app`, and `src/pages/admin`.
 - Reusable UI, hooks, infra helpers, and stores live under `src/shared`.
 - Global styles live in `src/styles`.
+- Use `package.json` and `yarn.lock` for dependency versions; do not infer installed versions from README badges or stack tables.
 
 ## Commands
 
@@ -37,6 +46,17 @@ There is no test script currently. Do not invent a test command unless you add o
 
 Run the smallest relevant check for the change. For broader edits, run `yarn check:all` when practical. Before committing, run at least `yarn check:all`; `yarn lint:eslint` and `yarn build` are recommended for tooling, dependency, and routing changes.
 
+`yarn typecheck` uses `tsc -b` to check both app and Vite configs through the root project references. Keep build mode: `tsc --noEmit` against the root's empty `files` list does not traverse those references. Do not typecheck individual source files outside their project config.
+
+For guidance-only edits, use `yarn format:check AGENTS.md` and review the diff. Reuse valid check results unless further changes or failures justify rerunning them.
+
+## Runtime And Local Services
+
+- Keep browser code under `src` free of Node-only APIs. `tsconfig.app.json` owns browser compilation; `tsconfig.node.json` owns `vite.config.ts`. Preserve `pm2.config.cjs` as CommonJS within the ESM package.
+- `vite.config.ts` defines dev port `5173`, preview port `5174`, and the `/api` proxy to `https://localhost:5170`. The backend is external to this repository; both proxy configurations must stay coherent when changing local API setup.
+- `pm2.config.cjs` launches the Vite development command. It is not a production deployment configuration, and `yarn preview` is a local build preview.
+- Treat browser-exposed Vite environment values as public; keep credentials out of client code and tracked files.
+
 ## Tooling Source Of Truth
 
 - Let `oxfmt` own mechanical formatting and import ordering.
@@ -51,7 +71,7 @@ Run the smallest relevant check for the change. For broader edits, run `yarn che
 Check, in order:
 
 1. Is there already a local pattern, module, or README section for this area?
-2. Does `std-kit` already provide a suitable utility? Prefer it before adding a new helper: https://github.com/luastoned/std-kit
+2. If a utility is needed, does `std-kit` provide suitable semantics? It is the preferred utility layer, but is not currently a dependency; ordinary edits do not require adding it: https://github.com/luastoned/std-kit
 3. Can the change be solved simply without adding a new abstraction?
 4. Does the change preserve ESM, Vite 8, React 19, Chakra UI, and browser runtime assumptions?
 
@@ -73,6 +93,10 @@ Keep changes small, predictable, and easy to review.
 - Prefer `satisfies` for typed constants and config objects.
 - Avoid non-null assertions unless there is an immediately preceding runtime guarantee.
 - Use runtime validation at trust boundaries when static types cannot prove the shape.
+- Prefer readonly arrays and object shapes at external boundaries unless mutation is required.
+- Prefer `@ts-expect-error` with a short reason over `@ts-ignore` when a suppression is unavoidable.
+- Prefer direct module imports; avoid barrels that obscure ownership or introduce cycles.
+- Avoid global augmentation unless required by the framework, as with TanStack Router's existing `Register` declaration.
 
 ## React And Architecture Rules
 
@@ -80,6 +104,9 @@ Keep changes small, predictable, and easy to review.
 - Keep route context, route tree, and router instance in `src/app/router`.
 - Keep route guards in `src/app/auth/auth-guards.ts` and role permissions in `src/app/auth/permissions.ts`.
 - Keep auth session helpers in `src/app/auth/auth-session.ts`.
+- Auth currently simulates users and roles in localStorage. Preserve validation when reading stored users; client-side roles and route guards are not server authorization. Real API access must rely on backend-enforced permissions.
+- Preserve the live `getAuthUser` router context and auth subscription that invalidates the router on session changes; do not replace them with a captured user snapshot.
+- Define new pages in the code-based route tree with the existing named-export lazy loading pattern. Keep access checks in `beforeLoad` via shared guards; hiding navigation alone does not guard a route.
 - Keep area shell concerns in layouts, not pages.
 - Keep public, authenticated app, and admin/moderation pages in their existing page folders.
 - Keep reusable presentational UI under `src/shared/ui`.
@@ -102,14 +129,16 @@ Keep changes small, predictable, and easy to review.
 - Prefer small, single-purpose functions and plain objects.
 - Use classes only when they provide a clear boundary for cohesive state, dependencies, behavior, or a custom `Error` type.
 - Avoid unnecessary helpers, wrappers, dependencies, and framework-like abstractions.
-- Do not extract shared helpers until a pattern repeats enough to justify it, unless the local design already establishes the abstraction.
+- Extract shared behavior when stable duplication, ownership, or a public contract justifies it; repetition counts are a heuristic, not a prerequisite.
 - Prefer early returns over deep nesting.
 - Prefer options objects over positional arguments once a function has 3+ parameters or multiple booleans.
 - Do not silently swallow errors. Preserve causes and useful context when wrapping or logging.
+- Prefer named `function` declarations for exported or shared module logic, matching existing auth helpers; use arrows for callbacks and short lexical closures.
+- Keep resource lifetimes and cancellation explicit when adding subscriptions or I/O. Use the surrounding Query or React lifecycle and pass supported cancellation signals through to requests.
 
 ## Commit Style
 
-Follow Conventional Commits with emoji, matching existing history.
+Follow Conventional Commits with emoji. Explicit repository policy governs; use history as a consistency check.
 Use this subject format: `<type>[optional scope][optional !]: <gitmoji> <description>`.
 
 ## Default Decision Rule

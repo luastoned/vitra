@@ -5,11 +5,10 @@ import { router } from '~/app/router/router';
 
 import '~/styles/app.css';
 
-export const App = () => {
+export function App() {
   return (
     <AppProviders>
       <RouterProvider router={router} />
-      {/* <TanStackRouterDevtools router={router} /> */}
     </AppProviders>
   );
-};
+}

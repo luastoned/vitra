@@ -1,8 +1,14 @@
 import react from '@vitejs/plugin-react';
 import unfonts from 'unplugin-fonts/vite';
-import { defineConfig } from 'vite';
+import { defineConfig, type ProxyOptions } from 'vite';
 
-// https://vite.dev/config/
+const apiProxy = {
+  target: 'https://localhost:5170',
+  changeOrigin: true,
+  secure: false,
+  ws: true,
+} satisfies ProxyOptions;
+
 export default defineConfig({
   plugins: [
     react(),
@@ -44,24 +50,14 @@ export default defineConfig({
     // host: '0.0.0.0',
     port: 5173,
     proxy: {
-      '/api': {
-        target: 'https://localhost:5170',
-        changeOrigin: true,
-        secure: false,
-        ws: true,
-      },
+      '/api': { ...apiProxy },
     },
   },
   preview: {
     // host: '0.0.0.0',
     port: 5174,
     proxy: {
-      '/api': {
-        target: 'https://localhost:5170',
-        changeOrigin: true,
-        secure: false,
-        ws: true,
-      },
+      '/api': { ...apiProxy },
     },
   },
 });

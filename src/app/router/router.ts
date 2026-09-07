@@ -14,9 +14,13 @@ export const router = createRouter({
   defaultPreload: 'intent',
 });
 
-subscribeAuthUser(() => {
+const unsubscribeAuthUser = subscribeAuthUser(() => {
   void router.invalidate();
 });
+
+if (import.meta.hot) {
+  import.meta.hot.dispose(unsubscribeAuthUser);
+}
 
 // Register the router instance for type safety
 declare module '@tanstack/react-router' {

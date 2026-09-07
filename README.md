@@ -49,7 +49,7 @@
 | UI      | React `19`, Chakra UI `3`, next-themes   |
 | Routing | TanStack Router `1`                      |
 | Data    | TanStack React Query `5`, Zustand `5`    |
-| Build   | Vite `8`, Rolldown/Oxc, TypeScript `6`   |
+| Build   | Vite `8`, Rolldown/Oxc, TypeScript `7`   |
 | Quality | Oxlint, Oxfmt, ESLint compatibility lint |
 | Icons   | `@phosphor-icons/react`                  |
 | Fonts   | Fontsource variable font packages        |
@@ -74,19 +74,19 @@ The dev server starts with Vite. By default, the app uses:
 
 ## 🧰 Scripts
 
-| Command             | Purpose                                          |
-| ------------------- | ------------------------------------------------ |
-| `yarn dev`          | Start the Vite dev server.                       |
-| `yarn build`        | Typecheck project references and build.          |
-| `yarn preview`      | Preview the production build locally.            |
-| `yarn check:all`    | Run typecheck, Oxlint, and Oxfmt check.          |
-| `yarn typecheck`    | Run `tsc --noEmit`.                              |
-| `yarn lint`         | Run Oxlint.                                      |
-| `yarn lint:fix`     | Run Oxlint with fixes.                           |
-| `yarn lint:eslint`  | Run ESLint compatibility linting.                |
-| `yarn format`       | Format with Oxfmt.                               |
-| `yarn format:check` | Check formatting with Oxfmt.                     |
-| `yarn snippets`     | Add Chakra snippets into `src/shared/ui/chakra`. |
+| Command             | Purpose                                              |
+| ------------------- | ---------------------------------------------------- |
+| `yarn dev`          | Start the Vite dev server.                           |
+| `yarn build`        | Typecheck project references and build.              |
+| `yarn preview`      | Preview the production build locally.                |
+| `yarn check:all`    | Run typecheck, Oxlint, and Oxfmt check.              |
+| `yarn typecheck`    | Check app and Vite project references with `tsc -b`. |
+| `yarn lint`         | Run Oxlint.                                          |
+| `yarn lint:fix`     | Run Oxlint with fixes.                               |
+| `yarn lint:eslint`  | Run ESLint compatibility linting.                    |
+| `yarn format`       | Format with Oxfmt.                                   |
+| `yarn format:check` | Check formatting with Oxfmt.                         |
+| `yarn snippets`     | Add Chakra snippets into `src/shared/ui/chakra`.     |
 
 ## 📁 Project Shape
 
@@ -114,6 +114,8 @@ src/
 
 Routes are defined in code under `src/app/router`. Route guards live in `src/app/auth/auth-guards.ts`, while role permissions are centralized in `src/app/auth/permissions.ts`.
 
+Authentication is a local demo: the login page selects a role and stores the user in localStorage. When adding a real backend, enforce authorization there; browser roles and route guards only control the frontend. Session changes invalidate the router so guards read the current user.
+
 The layout split keeps route-area concerns explicit:
 
 - `PublicLayout` for marketing/auth pages.
@@ -125,8 +127,9 @@ The layout split keeps route-area concerns explicit:
 
 - Oxfmt owns mechanical formatting and import ordering.
 - Oxlint is the primary linter.
-- ESLint remains available through `yarn lint:eslint` for compatibility with React hook and Vite refresh rules.
+- `yarn lint:eslint` retains the secondary React hook and Vite refresh checks. The current `typescript-eslint` dependency rejects TypeScript `7`, so this command is blocked until that dependency compatibility is resolved.
 - TypeScript uses strict mode with bundler module resolution.
+- Typechecking uses build mode to traverse both project references; the app and Vite configs disable JavaScript emission.
 - Vite resolves the `~/*` alias natively through `resolve.tsconfigPaths`.
 
 ## 📄 License
