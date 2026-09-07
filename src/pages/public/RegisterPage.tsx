@@ -6,6 +6,7 @@ export function RegisterPage() {
       <Heading as="h1" size="xl">
         Register
       </Heading>
+
       <Text color="fg.muted">Registration flow placeholder.</Text>
     </Stack>
   );

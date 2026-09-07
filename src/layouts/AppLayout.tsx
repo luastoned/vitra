@@ -21,10 +21,12 @@ export function AppLayout() {
             <Text fontSize="xl" fontWeight="bold">
               App Area
             </Text>
+
             <Text color="fg.muted" fontSize="sm">
               Signed in as {user?.email ?? 'unknown user'} ({user?.role ?? 'guest'})
             </Text>
           </Stack>
+
           <Button variant="outline" size="sm" onClick={onSignOut}>
             Sign out
           </Button>
@@ -34,12 +36,15 @@ export function AppLayout() {
           <Link asChild>
             <RouterLink to="/dashboard">Dashboard</RouterLink>
           </Link>
+
           <Link asChild>
             <RouterLink to="/profile">Profile</RouterLink>
           </Link>
+
           <Link asChild>
             <RouterLink to="/settings">Settings</RouterLink>
           </Link>
+
           {user && canAccessRole(user.role, 'moderator') && (
             <Link asChild>
               <RouterLink to="/admin">Admin</RouterLink>
@@ -66,9 +71,11 @@ export function AppLayout() {
           <Link asChild>
             <RouterLink to="/dashboard">Dashboard</RouterLink>
           </Link>
+
           <Link asChild>
             <RouterLink to="/profile">Profile</RouterLink>
           </Link>
+
           <Link asChild>
             <RouterLink to="/settings">Settings</RouterLink>
           </Link>

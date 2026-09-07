@@ -6,6 +6,7 @@ export function ProfilePage() {
       <Heading as="h1" size="xl">
         Profile
       </Heading>
+
       <Text color="fg.muted">User profile and account preferences placeholder.</Text>
     </Stack>
   );

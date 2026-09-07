@@ -97,6 +97,7 @@ src/
     providers/  top-level provider composition
     router/     route context, route tree, and router instance
     theme/      Chakra theme system
+  features/     capability-specific UI, behavior, queries, and API calls
   layouts/      root, public, app, and admin shells
   pages/
     public/     public routes
@@ -105,10 +106,14 @@ src/
   shared/
     hooks/      reusable hooks
     lib/        query client, toaster config, infra helpers
-    stores/     Zustand stores
+    stores/     domain-independent shared UI stores
     ui/         reusable presentational UI
   styles/       global styles
 ```
+
+Pages compose routed screens; features own capability-specific behavior. The demo login controls are the first feature, while session and access policy remain in `app/auth`. Add other features when their real functionality arrives.
+
+See [architecture](docs/architecture.md) for dependency boundaries and guidance on growing features.
 
 ## 🧭 Routing & Auth
 

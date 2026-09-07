@@ -6,6 +6,7 @@ export function ReportsPage() {
       <Heading as="h1" size="xl">
         Reports
       </Heading>
+
       <Text color="fg.muted">Reports queue and triage placeholder.</Text>
     </Stack>
   );

@@ -13,6 +13,7 @@ export function AppProviders({ children }: PropsWithChildren) {
       <ChakraProvider value={system}>
         <ColorModeProvider>
           {children}
+
           <Toaster />
         </ColorModeProvider>
       </ChakraProvider>

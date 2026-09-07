@@ -8,16 +8,20 @@ export function PublicLayout() {
         <Container maxW="6xl" py="3">
           <HStack justify="space-between" gap="4" wrap="wrap">
             <Text fontWeight="bold">Vitra</Text>
+
             <HStack gap="4">
               <Link asChild>
                 <RouterLink to="/">Home</RouterLink>
               </Link>
+
               <Link asChild>
                 <RouterLink to="/about">About</RouterLink>
               </Link>
+
               <Link asChild>
                 <RouterLink to="/pricing">Pricing</RouterLink>
               </Link>
+
               <Link asChild>
                 <RouterLink to="/login">Login</RouterLink>
               </Link>
@@ -25,6 +29,7 @@ export function PublicLayout() {
           </HStack>
         </Container>
       </Box>
+
       <Container maxW="6xl" py={{ base: '6', md: '10' }}>
         <Outlet />
       </Container>

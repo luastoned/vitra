@@ -20,6 +20,7 @@ Vitra is a TypeScript + React + Vite starter for a pragmatic routed frontend app
 - App entrypoint: `src/main.tsx` mounts `src/App.tsx`.
 - Provider composition lives in `src/app/providers/AppProviders.tsx`.
 - Theme setup lives in `src/app/theme`.
+- Capability-specific UI, behavior, API calls, queries, and types live in `src/features/<capability>`.
 - Auth session, guards, and role permissions live in `src/app/auth`.
 - Route-area layouts live in `src/layouts`: `RootLayout`, `PublicLayout`, `AppLayout`, and `AdminLayout`.
 - Pages are grouped by access area under `src/pages/public`, `src/pages/app`, and `src/pages/admin`.
@@ -63,10 +64,13 @@ For guidance-only edits, use `yarn format:check AGENTS.md` and review the diff. 
 - Let `oxlint` own primary lint rules.
 - Keep ESLint available as a secondary compatibility check through `yarn lint:eslint`.
 - Do not hand-enforce formatter-owned details such as quote style, semicolons, trailing commas, line width, or import sorting.
+- Separate HTML/JSX sibling blocks on separate lines with one blank line, including self-closing elements and conditional or mapped JSX blocks. Oxfmt preserves this spacing but does not insert it; add it when editing markup. Keep inline text and whitespace-sensitive content unchanged, and do not add blank lines between a parent tag and its children solely for this rule.
 - Follow the TypeScript project configs for semantics: strict mode, `erasableSyntaxOnly`, `verbatimModuleSyntax`, `moduleResolution: "bundler"`, `moduleDetection: "force"`, `noUncheckedSideEffectImports`, and React JSX transform.
 - Use Vite's native `resolve.tsconfigPaths` support for `~/*` path aliases.
 
 ## Before Changing Code
+
+Read [docs/architecture.md](docs/architecture.md) when changing ownership or composition, and [src/features/README.md](src/features/README.md) when adding a feature.
 
 Check, in order:
 
@@ -109,10 +113,13 @@ Keep changes small, predictable, and easy to review.
 - Define new pages in the code-based route tree with the existing named-export lazy loading pattern. Keep access checks in `beforeLoad` via shared guards; hiding navigation alone does not guard a route.
 - Keep area shell concerns in layouts, not pages.
 - Keep public, authenticated app, and admin/moderation pages in their existing page folders.
+- Keep pages focused on screen composition. Put capability-specific interactions and data access in `src/features`; add folders only for implemented capabilities.
+- Features may consume shared modules and the session/permission APIs in `app/auth`, but must not import pages, layouts, or the router instance/tree. Keep auth policy independent of features.
+- Keep shared modules independent of app, feature, page, and layout modules. Capability-specific code remains in its feature even when several screens use it.
 - Keep reusable presentational UI under `src/shared/ui`.
 - Keep reusable hooks under `src/shared/hooks`.
 - Keep infra helpers such as React Query and toast setup under `src/shared/lib`.
-- Keep global UI state in Zustand stores under `src/shared/stores`.
+- Keep domain-independent shared UI state in focused Zustand stores under `src/shared/stores`; feature-specific stores belong in their feature. Use component state for local interactions and React Query for server data.
 - Keep Chakra wrapper components thin. Business decisions and routing policy belong in app/auth/router modules, not generic UI components.
 - Keep color mode split between `src/shared/hooks/use-color-mode.ts` and `src/shared/ui/chakra/ColorMode.tsx`.
 - Keep toaster setup split between `src/shared/lib/toast/toaster.ts` and `src/shared/ui/chakra/Toaster.tsx`.

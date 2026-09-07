@@ -6,6 +6,7 @@ export function AboutPage() {
       <Heading as="h1" size="xl">
         About
       </Heading>
+
       <Text color="fg.muted">This project is organized for public, app, and admin areas with role-based guards.</Text>
     </Stack>
   );

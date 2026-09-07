@@ -6,6 +6,7 @@ export function SettingsPage() {
       <Heading as="h1" size="xl">
         Settings
       </Heading>
+
       <Text color="fg.muted">Application settings placeholder.</Text>
     </Stack>
   );

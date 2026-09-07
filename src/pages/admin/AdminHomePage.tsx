@@ -6,6 +6,7 @@ export function AdminHomePage() {
       <Heading as="h1" size="xl">
         Admin Overview
       </Heading>
+
       <Text color="fg.muted">Moderation/admin summary placeholder.</Text>
     </Stack>
   );

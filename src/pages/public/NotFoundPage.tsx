@@ -7,7 +7,9 @@ export function NotFoundPage() {
       <Heading as="h1" size="xl">
         Page not found
       </Heading>
+
       <Text color="fg.muted">The route you requested does not exist.</Text>
+
       <Button asChild>
         <RouterLink to="/">Go home</RouterLink>
       </Button>

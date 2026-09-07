@@ -6,6 +6,7 @@ export function AuditLogPage() {
       <Heading as="h1" size="xl">
         Audit log
       </Heading>
+
       <Text color="fg.muted">Audit trail and security event viewer placeholder.</Text>
     </Stack>
   );

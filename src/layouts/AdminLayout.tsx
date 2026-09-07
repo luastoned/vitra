@@ -21,10 +21,12 @@ export function AdminLayout() {
             <Text fontSize="xl" fontWeight="bold">
               Admin Area
             </Text>
+
             <Text color="fg.muted" fontSize="sm">
               Role: {user?.role ?? 'guest'}
             </Text>
           </Stack>
+
           <Button variant="outline" size="sm" onClick={onSignOut}>
             Sign out
           </Button>
@@ -34,20 +36,25 @@ export function AdminLayout() {
           <Link asChild>
             <RouterLink to="/admin">Overview</RouterLink>
           </Link>
+
           <Link asChild>
             <RouterLink to="/admin/users">Users</RouterLink>
           </Link>
+
           <Link asChild>
             <RouterLink to="/admin/reports">Reports</RouterLink>
           </Link>
+
           {user && canAccessRole(user.role, 'admin') && (
             <Link asChild>
               <RouterLink to="/admin/roles">Roles</RouterLink>
             </Link>
           )}
+
           <Link asChild>
             <RouterLink to="/admin/audit-log">Audit log</RouterLink>
           </Link>
+
           <Link asChild>
             <RouterLink to="/dashboard">Back to app</RouterLink>
           </Link>

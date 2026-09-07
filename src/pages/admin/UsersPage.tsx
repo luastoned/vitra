@@ -6,6 +6,7 @@ export function UsersPage() {
       <Heading as="h1" size="xl">
         Users
       </Heading>
+
       <Text color="fg.muted">User management table and moderation actions placeholder.</Text>
     </Stack>
   );

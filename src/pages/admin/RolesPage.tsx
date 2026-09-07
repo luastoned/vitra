@@ -6,6 +6,7 @@ export function RolesPage() {
       <Heading as="h1" size="xl">
         Roles & permissions
       </Heading>
+
       <Text color="fg.muted">Restricted admin settings placeholder (admin/super-admin only).</Text>
     </Stack>
   );
