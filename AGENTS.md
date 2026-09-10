@@ -14,7 +14,7 @@ Vitra is a TypeScript + React + Vite starter for a pragmatic routed frontend app
 
 - Runtime: browser React app, ESM package mode, built with Vite `8` using Rolldown/Oxc.
 - Package manager: Yarn classic, with `yarn.lock` committed.
-- UI stack: React `19.2`, Chakra UI `3`, next-themes, and `@phosphor-icons/react`.
+- UI stack: React `19.3`, Chakra UI `3`, next-themes, and `@phosphor-icons/react`.
 - Routing: TanStack Router `1`, with code-based routing under `src/app/router`.
 - Data/state: TanStack React Query `5` for server state and Zustand `5` for global UI state.
 - App entrypoint: `src/main.tsx` mounts `src/App.tsx`.
